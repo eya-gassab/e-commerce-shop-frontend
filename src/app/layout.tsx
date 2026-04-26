@@ -1,6 +1,6 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-import { AuthProvider } from "@/lib/auth-context";
+import { AuthProvider } from "@/contexts/auth-context";
 import { CartProvider } from "@/lib/cart-context";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";

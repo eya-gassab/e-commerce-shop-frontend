@@ -11,6 +11,13 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  // CORS proxy for backend during development
+  rewrites: async () => [
+    {
+      source: "/api/:path*",
+      destination: "http://localhost:8097/api/:path*",
+    },
+  ],
 };
 
 export default nextConfig;

@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAuth } from "@/lib/auth-context";
+import { useAuth } from "@/contexts/auth-context";
 import { useCart } from "@/lib/cart-context";
 import {
   CreditCard,
@@ -27,7 +27,7 @@ import {
 import Link from "next/link";
 
 export default function Navbar() {
-  const { isAdmin, login, logout } = useAuth();
+  const { isAdmin, isAuthenticated, logout } = useAuth();
   const { totalItems } = useCart();
 
   return (
@@ -58,7 +58,7 @@ export default function Navbar() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="end" forceMount>
-              {isAdmin ? (
+              {isAuthenticated && isAdmin ? (
                 <>
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
@@ -121,12 +121,17 @@ export default function Navbar() {
                 <>
                   <DropdownMenuLabel>Guest User</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    onClick={login}
-                    className="flex items-center"
-                  >
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Login as Admin</span>
+                  <DropdownMenuItem asChild>
+                    <Link href="/login" className="flex items-center">
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Login</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/register" className="flex items-center">
+                      <UserCircle className="mr-2 h-4 w-4" />
+                      <span>Register</span>
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild>

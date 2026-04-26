@@ -34,7 +34,7 @@ const dummyProducts: Product[] = [
     title: "Organic Cotton T-Shirt",
     price: 29.99,
     image:
-      "https://images.unsplash.com/photo-1713881842156-3d9ef36418cc??w=600&h=600&fit=crop&crop=center",
+      "https://images.unsplash.com/photo-1713881842156-3d9ef36418cc?w=600&h=600&fit=crop&crop=center",
     description: "Comfortable organic cotton t-shirt in various colors",
     category: "Clothing",
   },
