@@ -1,0 +1,15 @@
+import AuthGuard from "@/components/auth-guard";
+import SellerSidebar from "@/components/seller-sidebar";
+
+export default function SellerLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <AuthGuard requiredRole="SELLER">
+      <div className="flex h-screen bg-background">
+        <SellerSidebar />
+        <main className="flex-1 overflow-y-auto">
+          <div className="container mx-auto p-6">{children}</div>
+        </main>
+      </div>
+    </AuthGuard>
+  );
+}
