@@ -1,5 +1,9 @@
 // src/lib/api-client.ts
+<<<<<<< HEAD
 import axios from "axios";
+=======
+import axios, { AxiosResponse } from "axios";
+>>>>>>> 3d2ca38e0b5a15ab3d1000c2394426c1b16e36e6
 
 const API_BASE_URL = "/api";
 
@@ -29,7 +33,10 @@ export const clearTokens = () => {
   }
 };
 
+<<<<<<< HEAD
 // Restore tokens from localStorage on module load (browser only)
+=======
+>>>>>>> 3d2ca38e0b5a15ab3d1000c2394426c1b16e36e6
 if (typeof window !== "undefined") {
   const storedAccess = localStorage.getItem("access_token");
   const storedRefresh = localStorage.getItem("refresh_token");
@@ -39,7 +46,10 @@ if (typeof window !== "undefined") {
   }
 }
 
+<<<<<<< HEAD
 // Request interceptor: inject Bearer token
+=======
+>>>>>>> 3d2ca38e0b5a15ab3d1000c2394426c1b16e36e6
 apiClient.interceptors.request.use((config) => {
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
@@ -47,14 +57,21 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
+<<<<<<< HEAD
 // Response interceptor: auto-refresh on 401
 apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
+=======
+apiClient.interceptors.response.use(
+  (response: AxiosResponse) => response,
+  async (error: AxiosResponse["config"] | any) => {
+>>>>>>> 3d2ca38e0b5a15ab3d1000c2394426c1b16e36e6
     const originalRequest = error.config;
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
+<<<<<<< HEAD
         // Use refreshToken (camelCase) — matches Spring Boot AuthService
         const response = await axios.post(`${API_BASE_URL}/auth/refresh`, {
           refreshToken,
@@ -68,6 +85,19 @@ apiClient.interceptors.response.use(
         clearTokens();
         if (typeof window !== "undefined") window.location.href = "/login";
         return Promise.reject(error);
+=======
+        const response = await axios.post(`${API_BASE_URL}/auth/refresh`, {
+          refreshToken,
+        });
+        const { access_token, refresh_token } = response.data;
+        setTokens(access_token, refresh_token);
+        originalRequest.headers.Authorization = `Bearer ${access_token}`;
+        return apiClient(originalRequest);
+      } catch (refreshError) {
+        clearTokens();
+        window.location.href = "/login";
+        return Promise.reject(refreshError);
+>>>>>>> 3d2ca38e0b5a15ab3d1000c2394426c1b16e36e6
       }
     }
     return Promise.reject(error);
